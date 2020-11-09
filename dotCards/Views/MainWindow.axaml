@@ -1,0 +1,18 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:dotCards.ViewModels;assembly=dotCards"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:dotCards.Views"
+        mc:Ignorable="d" 
+        d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="dotCards.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Width="200" Height="300"
+        Content="{Binding Content}"
+        Title="dotCards">
+
+  <views:SetListView/>
+  
+
+</Window>
