@@ -5,19 +5,20 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="dotCards.Views.SetListView">
 
-  <DockPanel>
+  <StackPanel>
     <ItemsControl Items="{Binding Items}">
       <ItemsControl.ItemTemplate>
         <DataTemplate>
-          
-          <DockPanel>
-            <TextBlock Width="400" Text="{Binding Description}"></TextBlock>
-            <Button MaxWidth="150" Content="Select" Command="{Binding $parent[Window].DataContext.SetSelection}" CommandParameter="{Binding FilePath}"></Button>
-          </DockPanel>
-          
+			<DockPanel HorizontalAlignment="Center" >
+				<TextBlock Height="10" DockPanel.Dock="Top">
+					<!--Spacing between items-->
+				</TextBlock>
+				<TextBlock Width="400" Text="{Binding Description}" Margin="5,0,0,0"></TextBlock>
+				<Button Width="150" Content="Select" Command="{Binding $parent[Window].DataContext.SetSelection}" CommandParameter="{Binding FilePath}"></Button>
+			</DockPanel>
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
-  </DockPanel>
+  </StackPanel>
   
 </UserControl>
