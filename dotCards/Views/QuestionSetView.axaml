@@ -2,17 +2,64 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mdxam="clr-namespace:MdXaml;assembly=MdXaml"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="dotCards.Views.QuestionSetView">
 
-  <StackPanel Spacing="50">
-    <TextBlock Text="{Binding CurrQuestion}" FontSize="40"></TextBlock>
-    <TextBlock Text="{Binding CurrAnswer}" FontSize="15"></TextBlock>
 
+  <!--
+  <KeyBinding Command="{Binding ToggleAnswerVisibility}"
+                Gesture="Space" />-->
+
+
+  
+  
+  
+  <StackPanel Spacing="50" MaxWidth="1000">
+
+    
+    
+    
+    <TextBlock Text="{Binding CurrQuestion}" FontSize="40"></TextBlock>
+
+    <TextBox Text="Tab space to show answer"
+             TextWrapping="Wrap"
+             AcceptsReturn="True"
+             IsVisible="{Binding !ShowAnswer}"
+             IsReadOnly="True"
+             TextAlignment="Center">
+
+      <TextBox.KeyBindings>
+        <KeyBinding Command="{Binding SpaceCommand}" Gesture="Space"/>
+        <KeyBinding Command="{Binding PrevCommand}" Gesture="Left"/>
+        <KeyBinding Command="{Binding NextCommand}" Gesture="Right"/>
+      </TextBox.KeyBindings>
+
+    </TextBox>
+    
+    
+    <TextBox Text="{Binding CurrAnswer}" 
+             TextWrapping="Wrap"
+             AcceptsReturn="True"
+             IsVisible="{Binding ShowAnswer}"
+             IsReadOnly="True">
+
+      <TextBox.KeyBindings>
+        <KeyBinding Command="{Binding SpaceCommand}" Gesture="Space"/>
+        <KeyBinding Command="{Binding PrevCommand}" Gesture="Left"/>
+        <KeyBinding Command="{Binding NextCommand}" Gesture="Right"/>
+      </TextBox.KeyBindings>
+      
+    </TextBox>
+          
     <DockPanel LastChildFill="False">
       <Button Content="Prev" DockPanel.Dock="Left"  Command="{Binding PrevQuestion}"></Button>
       <Button Content="Next" DockPanel.Dock="Right" Command="{Binding NextQuestion}"></Button>
     </DockPanel>
+
     
+
+    <Button Content="Go Back" MaxWidth="150" DockPanel.Dock="Left" Command="{Binding $parent[Window].DataContext.ShowSets}"></Button>
   </StackPanel>
+
 </UserControl>

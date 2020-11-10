@@ -24,12 +24,13 @@ namespace dotCards.ViewModels
         private List<SetItem> setCollection = new List<SetItem>();
 
 
+
+
         public MainWindowViewModel()
         {
 
             string dir = @".\FlashCards";
 
-            
             if (Directory.Exists(dir))
             {
 
@@ -49,7 +50,9 @@ namespace dotCards.ViewModels
                 }
 
 
-                Content = List = new SetListViewModel(this.setCollection);
+                this.Content = this.SetList = new SetListViewModel(this.setCollection);
+                
+
             }
 
         }
@@ -65,7 +68,13 @@ namespace dotCards.ViewModels
             }
         }
 
-        public SetListViewModel List { get; }
+        public SetListViewModel SetList { get; set; }
+
+        public QuestionSetViewModel QuestionSet
+        {
+            get;
+            set;
+        }
 
 
         public SingleQuestion CurrQuestion { get; set; }
@@ -75,12 +84,16 @@ namespace dotCards.ViewModels
 
             SetItem itm = this.setCollection.Where((setitem) => { return setitem.FilePath == file; }).First();
 
+            this.QuestionSet = new QuestionSetViewModel(itm);
 
-
-            Content = new QuestionSetViewModel(itm);
- 
+            Content = this.QuestionSet;
         }
 
+        public void ShowSets()
+        {
+
+            this.Content = this.SetList;
+        }
 
         #region Private Methods
 
@@ -92,7 +105,7 @@ namespace dotCards.ViewModels
         private List<SingleQuestion> collectionQuestionsFromFile(string file)
         {
 
-            List < SingleQuestion > listOfQuestions = new List<SingleQuestion>();
+            List <SingleQuestion> listOfQuestions = new List<SingleQuestion>();
 
             string[] lines = File.ReadAllLines(file);
 
@@ -104,7 +117,7 @@ namespace dotCards.ViewModels
             {
                 SingleQuestion qst = new SingleQuestion();
 
-                string trmLine = lines[i].Trim();
+                string trmLine = lines[i];
 
 
                 if (trmLine.StartsWith("## ")) // Head
@@ -118,10 +131,10 @@ namespace dotCards.ViewModels
                     for (int j = i + 1; j < lines.Count(); j++)
                     { 
 
-                        if (!lines[j].Trim().StartsWith("## "))
+                        if (!lines[j].StartsWith("## "))
                         {
 
-                            qst.Answer += lines[j].Trim();
+                            qst.Answer += lines[j] + Environment.NewLine;
                             hasAnswer = true;
 
                         } else  {
