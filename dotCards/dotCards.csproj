@@ -7,6 +7,12 @@
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
   <ItemGroup>
+    <AvaloniaXaml Remove="Services\**" />
+    <Compile Remove="Services\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Services\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.0-preview6" />
     <PackageReference Include="Avalonia.Desktop" Version="0.10.0-preview6" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.0-preview6" />
@@ -19,8 +25,5 @@
     <Compile Update="Views\SetListView.axaml.cs">
       <DependentUpon>SetListView.axaml</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
   </ItemGroup>
 </Project>

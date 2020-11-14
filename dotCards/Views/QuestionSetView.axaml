@@ -11,24 +11,16 @@
     
     <DockPanel DockPanel.Dock="Top">
       <Button Content="Go Back" DockPanel.Dock="Left" Command="{Binding $parent[Window].DataContext.ShowSets}"></Button>
-      <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding CurrQuestion}" FontSize="42"></TextBlock>
+      <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding CurrQuestion}" FontSize="30">Question Title</TextBlock>
     </DockPanel>
 
 
 
     <StackPanel DockPanel.Dock="Bottom" Spacing="50" MaxWidth="1000">
-      <TextBox Text="Tab space to show answer"
-             TextWrapping="Wrap"
-             AcceptsReturn="True"
-             IsVisible="{Binding !ShowAnswer}"
-             IsReadOnly="True"
-             TextAlignment="Center">
-        <TextBox.KeyBindings>
-          <KeyBinding Command="{Binding SpaceCommand}" Gesture="Space"/>
-          <KeyBinding Command="{Binding PrevCommand}" Gesture="Left"/>
-          <KeyBinding Command="{Binding NextCommand}" Gesture="Right"/>
-        </TextBox.KeyBindings>
-      </TextBox>
+		
+     
+
+		
       <TextBox Text="{Binding CurrAnswer}"
                TextWrapping="Wrap"
                AcceptsReturn="True"
@@ -40,6 +32,9 @@
           <KeyBinding Command="{Binding NextCommand}" Gesture="Right"/>
         </TextBox.KeyBindings>
       </TextBox>
+
+	  <Button Command="{Binding ToggleAnswerVisibility}" Content="Show answer"></Button>
+		
       <DockPanel LastChildFill="False">
         <Button Content="Prev" DockPanel.Dock="Left"  Command="{Binding PrevQuestion}"></Button>
         <Button Content="Next" DockPanel.Dock="Right" Command="{Binding NextQuestion}"></Button>
