@@ -18,17 +18,18 @@ namespace dotCards.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
 
-        ViewModelBase content;
+        #region Private Vars
 
+        private ViewModelBase content = null;
+
+        private SetListViewModel setListView = null;
 
         private List<SetItem> setCollection = new List<SetItem>();
 
-
-
+        #endregion
 
         public MainWindowViewModel()
         {
-
             string dir = @".\FlashCards";
 
             if (Directory.Exists(dir))
@@ -38,25 +39,27 @@ namespace dotCards.ViewModels
 
                 foreach (string file in files)
                 {
+                    if(file.Contains("README.md"))
+                    {
+                        continue;
+                    }
+
                     SetItem itm = new SetItem();
 
                     var info = new FileInfo(file);
-                    itm.Description = info.Name;
+                    itm.Description = "";
                     itm.FilePath = file;
                     itm.QuestionCollection = this.collectionQuestionsFromFile(file);
-                    itm.Description = info.Name + "(" + itm.QuestionCollection.Count.ToString() + ")";
+                    itm.Description = file.Substring(dir.Length, file.Length - dir.Length).Replace("\\", " - ") + "(" + itm.QuestionCollection.Count.ToString() + ")";
 
                     this.setCollection.Add(itm);
                 }
 
-
-                this.Content = this.SetList = new SetListViewModel(this.setCollection);
+                this.Content = this.setListView = new SetListViewModel(this.setCollection);
                 
-
             }
 
         }
-
 
 
         public ViewModelBase Content
@@ -68,7 +71,6 @@ namespace dotCards.ViewModels
             }
         }
 
-        public SetListViewModel SetList { get; set; }
 
         public QuestionSetViewModel QuestionSet
         {
@@ -77,7 +79,11 @@ namespace dotCards.ViewModels
         }
 
 
-        public SingleQuestion CurrQuestion { get; set; }
+        public SingleQuestion CurrQuestion { 
+            get; 
+            set; 
+        }
+
 
         public void SetSelection(string file)
         {
@@ -89,10 +95,11 @@ namespace dotCards.ViewModels
             Content = this.QuestionSet;
         }
 
+
         public void ShowSets()
         {
 
-            this.Content = this.SetList;
+            this.Content = this.setListView;
         }
 
         #region Private Methods

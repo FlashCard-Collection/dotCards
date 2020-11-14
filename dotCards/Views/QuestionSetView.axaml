@@ -5,61 +5,46 @@
              xmlns:mdxam="clr-namespace:MdXaml;assembly=MdXaml"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="dotCards.Views.QuestionSetView">
-
-
-  <!--
-  <KeyBinding Command="{Binding ToggleAnswerVisibility}"
-                Gesture="Space" />-->
-
-
   
-  
-  
-  <StackPanel Spacing="50" MaxWidth="1000">
+  <DockPanel>
 
     
-    
-    
-    <TextBlock Text="{Binding CurrQuestion}" FontSize="40"></TextBlock>
+    <DockPanel DockPanel.Dock="Top">
+      <Button Content="Go Back" DockPanel.Dock="Left" Command="{Binding $parent[Window].DataContext.ShowSets}"></Button>
+      <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding CurrQuestion}" FontSize="42"></TextBlock>
+    </DockPanel>
 
-    <TextBox Text="Tab space to show answer"
+
+
+    <StackPanel DockPanel.Dock="Bottom" Spacing="50" MaxWidth="1000">
+      <TextBox Text="Tab space to show answer"
              TextWrapping="Wrap"
              AcceptsReturn="True"
              IsVisible="{Binding !ShowAnswer}"
              IsReadOnly="True"
              TextAlignment="Center">
+        <TextBox.KeyBindings>
+          <KeyBinding Command="{Binding SpaceCommand}" Gesture="Space"/>
+          <KeyBinding Command="{Binding PrevCommand}" Gesture="Left"/>
+          <KeyBinding Command="{Binding NextCommand}" Gesture="Right"/>
+        </TextBox.KeyBindings>
+      </TextBox>
+      <TextBox Text="{Binding CurrAnswer}"
+               TextWrapping="Wrap"
+               AcceptsReturn="True"
+               IsVisible="{Binding ShowAnswer}"
+               IsReadOnly="True">
+        <TextBox.KeyBindings>
+          <KeyBinding Command="{Binding SpaceCommand}" Gesture="Space"/>
+          <KeyBinding Command="{Binding PrevCommand}" Gesture="Left"/>
+          <KeyBinding Command="{Binding NextCommand}" Gesture="Right"/>
+        </TextBox.KeyBindings>
+      </TextBox>
+      <DockPanel LastChildFill="False">
+        <Button Content="Prev" DockPanel.Dock="Left"  Command="{Binding PrevQuestion}"></Button>
+        <Button Content="Next" DockPanel.Dock="Right" Command="{Binding NextQuestion}"></Button>
+      </DockPanel>
+    </StackPanel>
 
-      <TextBox.KeyBindings>
-        <KeyBinding Command="{Binding SpaceCommand}" Gesture="Space"/>
-        <KeyBinding Command="{Binding PrevCommand}" Gesture="Left"/>
-        <KeyBinding Command="{Binding NextCommand}" Gesture="Right"/>
-      </TextBox.KeyBindings>
-
-    </TextBox>
-    
-    
-    <TextBox Text="{Binding CurrAnswer}" 
-             TextWrapping="Wrap"
-             AcceptsReturn="True"
-             IsVisible="{Binding ShowAnswer}"
-             IsReadOnly="True">
-
-      <TextBox.KeyBindings>
-        <KeyBinding Command="{Binding SpaceCommand}" Gesture="Space"/>
-        <KeyBinding Command="{Binding PrevCommand}" Gesture="Left"/>
-        <KeyBinding Command="{Binding NextCommand}" Gesture="Right"/>
-      </TextBox.KeyBindings>
-      
-    </TextBox>
-          
-    <DockPanel LastChildFill="False">
-      <Button Content="Prev" DockPanel.Dock="Left"  Command="{Binding PrevQuestion}"></Button>
-      <Button Content="Next" DockPanel.Dock="Right" Command="{Binding NextQuestion}"></Button>
-    </DockPanel>
-
-    
-
-    <Button Content="Go Back" MaxWidth="150" DockPanel.Dock="Left" Command="{Binding $parent[Window].DataContext.ShowSets}"></Button>
-  </StackPanel>
-
+  </DockPanel>
 </UserControl>

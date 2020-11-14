@@ -5,20 +5,24 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="dotCards.Views.SetListView">
 
-  <StackPanel>
-    <ItemsControl Items="{Binding Items}">
-      <ItemsControl.ItemTemplate>
-        <DataTemplate>
-			<DockPanel HorizontalAlignment="Center" >
-				<TextBlock Height="10" DockPanel.Dock="Top">
-					<!--Spacing between items-->
-				</TextBlock>
-				<TextBlock Width="400" Text="{Binding Description}" Margin="5,0,0,0"></TextBlock>
-				<Button Width="150" Content="Select" Command="{Binding $parent[Window].DataContext.SetSelection}" CommandParameter="{Binding FilePath}"></Button>
-			</DockPanel>
-        </DataTemplate>
-      </ItemsControl.ItemTemplate>
-    </ItemsControl>
-  </StackPanel>
+  <ScrollViewer Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Visible">
+    <StackPanel>
+
+      <ItemsControl Items="{Binding Items}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <DockPanel HorizontalAlignment="Center">
+              <TextBlock Height="10" DockPanel.Dock="Top">
+              </TextBlock>
+              <TextBlock Width="400" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding Description}" Margin="5,0,0,0"></TextBlock>
+              <Button Width="150" Content="Select" Command="{Binding $parent[Window].DataContext.SetSelection}" CommandParameter="{Binding FilePath}"></Button>
+            </DockPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+
+    </StackPanel>
+
+  </ScrollViewer>
   
 </UserControl>

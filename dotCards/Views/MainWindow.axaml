@@ -8,9 +8,10 @@
         d:DesignWidth="800" d:DesignHeight="450"
         x:Class="dotCards.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Width="200" Height="300"
+        Width="1280" Height="720"
         Content="{Binding Content}"
-        Title="dotCards">
+        Title="dotCards"
+        WindowState="Maximized">
 
   
   
