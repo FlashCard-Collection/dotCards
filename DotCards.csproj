@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HtmlRenderer.WinForms" Version="1.5.1-beta1" />
+    <PackageReference Include="Markdig" Version="0.24.0" />
+  </ItemGroup>
+
+</Project>
