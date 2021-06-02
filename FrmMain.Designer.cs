@@ -33,6 +33,8 @@ namespace DotCards
             this.colSetName = new System.Windows.Forms.ColumnHeader();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tbSelect = new System.Windows.Forms.TabPage();
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.btnUpdate = new System.Windows.Forms.Button();
             this.grpInfo = new System.Windows.Forms.GroupBox();
             this.lblTotalQCountNum = new System.Windows.Forms.Label();
             this.lblTotalQCount = new System.Windows.Forms.Label();
@@ -42,14 +44,16 @@ namespace DotCards
             this.lblPath = new System.Windows.Forms.Label();
             this.lblQestionCount = new System.Windows.Forms.Label();
             this.tbQuestions = new System.Windows.Forms.TabPage();
-            this.btnShowAnswer = new System.Windows.Forms.Button();
             this.htmlView = new TheArtOfDev.HtmlRenderer.WinForms.HtmlPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnShowAnswer = new System.Windows.Forms.Button();
             this.btnPrevQ = new System.Windows.Forms.Button();
             this.btnNextQ = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbSelect.SuspendLayout();
             this.grpInfo.SuspendLayout();
             this.tbQuestions.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lstSets
@@ -63,7 +67,7 @@ namespace DotCards
             this.lstSets.HideSelection = false;
             this.lstSets.Location = new System.Drawing.Point(3, 3);
             this.lstSets.Name = "lstSets";
-            this.lstSets.Size = new System.Drawing.Size(515, 583);
+            this.lstSets.Size = new System.Drawing.Size(281, 583);
             this.lstSets.TabIndex = 0;
             this.lstSets.UseCompatibleStateImageBehavior = false;
             this.lstSets.View = System.Windows.Forms.View.Details;
@@ -87,6 +91,8 @@ namespace DotCards
             // 
             // tbSelect
             // 
+            this.tbSelect.Controls.Add(this.treeView1);
+            this.tbSelect.Controls.Add(this.btnUpdate);
             this.tbSelect.Controls.Add(this.grpInfo);
             this.tbSelect.Controls.Add(this.lstSets);
             this.tbSelect.Location = new System.Drawing.Point(4, 24);
@@ -96,6 +102,24 @@ namespace DotCards
             this.tbSelect.TabIndex = 0;
             this.tbSelect.Text = "Select";
             this.tbSelect.UseVisualStyleBackColor = true;
+            // 
+            // treeView1
+            // 
+            this.treeView1.Location = new System.Drawing.Point(290, 4);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(228, 582);
+            this.treeView1.TabIndex = 8;
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnUpdate.Location = new System.Drawing.Point(524, 539);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(124, 47);
+            this.btnUpdate.TabIndex = 7;
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // grpInfo
             // 
@@ -179,10 +203,8 @@ namespace DotCards
             // 
             // tbQuestions
             // 
-            this.tbQuestions.Controls.Add(this.btnShowAnswer);
             this.tbQuestions.Controls.Add(this.htmlView);
-            this.tbQuestions.Controls.Add(this.btnPrevQ);
-            this.tbQuestions.Controls.Add(this.btnNextQ);
+            this.tbQuestions.Controls.Add(this.panel1);
             this.tbQuestions.Location = new System.Drawing.Point(4, 24);
             this.tbQuestions.Name = "tbQuestions";
             this.tbQuestions.Padding = new System.Windows.Forms.Padding(3);
@@ -191,55 +213,63 @@ namespace DotCards
             this.tbQuestions.Text = "Questions";
             this.tbQuestions.UseVisualStyleBackColor = true;
             // 
+            // htmlView
+            // 
+            this.htmlView.AutoScroll = true;
+            this.htmlView.AutoScrollMinSize = new System.Drawing.Size(932, 20);
+            this.htmlView.BackColor = System.Drawing.Color.White;
+            this.htmlView.BaseStylesheet = null;
+            this.htmlView.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.htmlView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.htmlView.Location = new System.Drawing.Point(3, 3);
+            this.htmlView.Name = "htmlView";
+            this.htmlView.Size = new System.Drawing.Size(932, 532);
+            this.htmlView.TabIndex = 5;
+            this.htmlView.Text = "htmlPanel1";
+            this.htmlView.UseGdiPlusTextRendering = true;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Honeydew;
+            this.panel1.Controls.Add(this.btnShowAnswer);
+            this.panel1.Controls.Add(this.btnPrevQ);
+            this.panel1.Controls.Add(this.btnNextQ);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(3, 535);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(932, 56);
+            this.panel1.TabIndex = 8;
+            // 
             // btnShowAnswer
             // 
             this.btnShowAnswer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnShowAnswer.Location = new System.Drawing.Point(421, 563);
+            this.btnShowAnswer.Location = new System.Drawing.Point(366, 3);
             this.btnShowAnswer.Name = "btnShowAnswer";
-            this.btnShowAnswer.Size = new System.Drawing.Size(75, 23);
-            this.btnShowAnswer.TabIndex = 6;
+            this.btnShowAnswer.Size = new System.Drawing.Size(214, 51);
+            this.btnShowAnswer.TabIndex = 9;
             this.btnShowAnswer.Text = "Show";
             this.btnShowAnswer.UseVisualStyleBackColor = true;
-            this.btnShowAnswer.Click += new System.EventHandler(this.btnShowAnswer_Click);
-            // 
-            // htmlView
-            // 
-            this.htmlView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.htmlView.AutoScroll = true;
-            this.htmlView.AutoScrollMinSize = new System.Drawing.Size(922, 20);
-            this.htmlView.BackColor = System.Drawing.Color.White;
-            this.htmlView.BaseStylesheet = null;
-            this.htmlView.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.htmlView.Location = new System.Drawing.Point(8, 3);
-            this.htmlView.Name = "htmlView";
-            this.htmlView.Size = new System.Drawing.Size(922, 554);
-            this.htmlView.TabIndex = 5;
-            this.htmlView.Text = "htmlPanel1";
             // 
             // btnPrevQ
             // 
             this.btnPrevQ.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnPrevQ.Location = new System.Drawing.Point(8, 563);
+            this.btnPrevQ.Location = new System.Drawing.Point(5, 3);
             this.btnPrevQ.Name = "btnPrevQ";
-            this.btnPrevQ.Size = new System.Drawing.Size(75, 23);
-            this.btnPrevQ.TabIndex = 4;
+            this.btnPrevQ.Size = new System.Drawing.Size(75, 51);
+            this.btnPrevQ.TabIndex = 8;
             this.btnPrevQ.Text = "Prev";
             this.btnPrevQ.UseVisualStyleBackColor = true;
-            this.btnPrevQ.Click += new System.EventHandler(this.btnPrevQ_Click);
             // 
             // btnNextQ
             // 
             this.btnNextQ.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextQ.Location = new System.Drawing.Point(855, 563);
+            this.btnNextQ.Location = new System.Drawing.Point(852, 3);
             this.btnNextQ.Name = "btnNextQ";
-            this.btnNextQ.Size = new System.Drawing.Size(75, 23);
-            this.btnNextQ.TabIndex = 3;
+            this.btnNextQ.Size = new System.Drawing.Size(75, 51);
+            this.btnNextQ.TabIndex = 7;
             this.btnNextQ.Text = "Next";
             this.btnNextQ.UseVisualStyleBackColor = true;
-            this.btnNextQ.Click += new System.EventHandler(this.btnNextQ_Click);
             // 
             // FrmMain
             // 
@@ -254,6 +284,7 @@ namespace DotCards
             this.grpInfo.ResumeLayout(false);
             this.grpInfo.PerformLayout();
             this.tbQuestions.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -271,12 +302,15 @@ namespace DotCards
         private System.Windows.Forms.Label lblPathStr;
         private System.Windows.Forms.Label lblQuestionCountNum;
         private System.Windows.Forms.ColumnHeader colSetName;
-        private System.Windows.Forms.Button btnPrevQ;
-        private System.Windows.Forms.Button btnNextQ;
         private TheArtOfDev.HtmlRenderer.WinForms.HtmlPanel htmlView;
         private System.Windows.Forms.Label lblTotalQCountNum;
         private System.Windows.Forms.Label lblTotalQCount;
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnShowAnswer;
+        private System.Windows.Forms.Button btnPrevQ;
+        private System.Windows.Forms.Button btnNextQ;
+        private System.Windows.Forms.TreeView treeView1;
     }
 }
 
