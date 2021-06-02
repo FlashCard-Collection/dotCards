@@ -23,6 +23,9 @@ namespace DotCards
 
         private int currCardIdx = 0;
 
+        private MarkdownPipeline pipeline;
+
+
         public FrmMain()
         {
             InitializeComponent();
@@ -42,9 +45,11 @@ namespace DotCards
             this.loadCardSets();
             this.fillListView();
 
-            
-
             this.fillTreeView();
+
+            this.pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+
+           
         }
 
         private void fillTreeView()
@@ -138,6 +143,7 @@ namespace DotCards
             {
                 return;
             }
+
             this.currCardIdx = 0;
             CardSet currSet = (CardSet)this.lstSets.SelectedItems[0].Tag;
             Directory.SetCurrentDirectory(currSet.GetFileInfo().Directory.FullName);
@@ -148,7 +154,7 @@ namespace DotCards
             if (this.currCardSet.GetCard(this.currCardIdx, out card))
             {
                 Console.WriteLine("Question:" + card.Question);
-                this.htmlView.Text = Markdown.ToHtml(card.Question);
+                this.htmlView.Text = Markdown.ToHtml(card.Question, this.pipeline);
             }
         }
 
@@ -163,7 +169,7 @@ namespace DotCards
             if(this.currCardSet.GetCard(this.currCardIdx, out card))
             {
                 Console.WriteLine("Question:" + card.Question);
-                this.htmlView.Text = Markdown.ToHtml(card.Question);
+                this.htmlView.Text = Markdown.ToHtml(card.Question, this.pipeline);
             }
         }
 
@@ -177,7 +183,7 @@ namespace DotCards
             Card card;
             if (this.currCardSet.GetCard(this.currCardIdx, out card))
             {
-                this.htmlView.Text = Markdown.ToHtml(card.Question);
+                this.htmlView.Text = Markdown.ToHtml(card.Question, this.pipeline);
             }
         }
 
@@ -191,8 +197,8 @@ namespace DotCards
             Card card;
             if (this.currCardSet.GetCard(this.currCardIdx, out card))
             {
-                this.htmlView.Text  = Markdown.ToHtml(card.Question);
-                this.htmlView.Text += Markdown.ToHtml(card.Answer);
+                this.htmlView.Text  = Markdown.ToHtml(card.Question, this.pipeline);
+                this.htmlView.Text += Markdown.ToHtml(card.Answer, this.pipeline);
             }
         }
 
@@ -200,7 +206,12 @@ namespace DotCards
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            Process.Start(Path.Combine(Directory.GetParent(System.Reflection.Assembly.GetEntryAssembly().Location).FullName, "GetFlashCards.bat"));
+            string batchFilePath = Path.Combine(Directory.GetParent(System.Reflection.Assembly.GetEntryAssembly().Location).FullName, "GetFlashCards.bat");
+           
+            ProcessStartInfo info = new ProcessStartInfo(batchFilePath);
+            info.WorkingDirectory = Directory.GetParent(System.Reflection.Assembly.GetEntryAssembly().Location).FullName;
+            
+            Process.Start(batchFilePath);
             this.loadCardSets();
             this.fillListView();
         }
