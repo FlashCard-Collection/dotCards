@@ -10,6 +10,12 @@ namespace DotCards
 {
     public class Card
     {
+        public Card()
+        {
+            this.Question = string.Empty;
+            this.Answer = string.Empty;
+        }
+
         public string Question;
 
         public string Answer;
@@ -72,7 +78,7 @@ namespace DotCards
 
             string[] lines = File.ReadAllLines(cardsetPath.FullName);
 
-            for (int i = 0; i < lines.Count(); i++)// string line in lines)
+            for (int i = 0; i < lines.Count(); i++)
             {
                 // Get cardset name
                 if (lines[i].Contains("#") && !lines[i].Contains("##") && !lines[i].Contains("###"))
@@ -83,65 +89,83 @@ namespace DotCards
                 // Handle one line question and multiple answer lines
                 if (lines[i].Contains("##") && !lines[i].Contains("###"))
                 {
-                    Card card = new Card();
-                    card.Question = lines[i] + Environment.NewLine;
-                    
-                    // read answer until next ## or ###
-                    for (int j = i + 1; j < lines.Count(); j++)
-                    {
-                        if (lines[j].Contains("##") || lines[j].Contains("###"))
-                        {
-                            // Set new index to continue with next question, one back not to skip the next question
-                            i = j - 1; 
-                            break;
-                        }
-                        card.Answer += lines[j] + Environment.NewLine;
-                    }
-
+                    Card card = this.parseCardSingleLineQuestion(lines, i);
                     this.cards.Add(card);
                 }
 
                 // Handle multiple question and answer lines
                 if (lines[i].Contains("###"))
                 {
-                    Card card = new Card();
-                    card.Question = lines[i] + Environment.NewLine;
-                    
-                    // read question until ---
-                    for (int j = i + 1; j < lines.Count(); j++)
-                    {
-                        if (lines[j].Contains("##") || lines[j].Contains("###"))
-                        {
-                            i = j;
-                            Console.WriteLine("error: expected --- before new question.");
-                            break;
-                        }
-                        card.Question += lines[j] + Environment.NewLine;
-
-                        if (lines[j].Contains("---"))
-                        {
-                            i = j;
-                            break;
-                        }
-                    }
-
-                    // read answer until ## or ###
-                    for (int j = i + 1; j < lines.Count(); j++)
-                    {
-                        if (lines[j].Contains("##") || lines[j].Contains("###"))
-                        {
-                            i = j - 1; // Set new index to continue with next question
-                            break;
-                        }
-                        card.Answer += lines[j] + Environment.NewLine;
-                    }
-
+                    Card card = this.parseCardMultilineQuestion(lines, i);
                     this.cards.Add(card);
                 }
+            }
+        }
 
+        private Card parseCardMultilineQuestion(string[] allLines, int questionIdx)
+        {
+            Card card = new Card();
+            card.Question = allLines[questionIdx] + Environment.NewLine;
+
+            int answerBeginIdx = -1;
+
+            // read question until ---
+            for (int j = questionIdx + 1; j < allLines.Count(); j++)
+            {
+                if (allLines[j].Contains("##") || allLines[j].Contains("###"))
+                {
+                    Console.WriteLine("Error expect --- before " + (allLines[j].Contains("###") ? "###" : "##"));
+                    break;
+                }
+
+                // Read question until mk separator (---)
+                if (allLines[j].Contains("---"))
+                {
+                    answerBeginIdx = j + 1;
+                    break;
+                }
+
+                card.Question += allLines[j] + Environment.NewLine;
             }
 
+            // No answer available
+            if (answerBeginIdx == -1)
+            {
+                card.Answer = string.Empty;
+                return card;
+            }
 
+            // read answer until ## or ###
+            for (int j = answerBeginIdx; j < allLines.Count(); j++)
+            {
+                if (allLines[j].Contains("##") || allLines[j].Contains("###"))
+                {
+                    break;
+                }
+                card.Answer += allLines[j] + Environment.NewLine;
+            }
+
+            return card;
         }
+
+        private Card parseCardSingleLineQuestion(string[] allLines, int questionIdx)
+        {
+            Card card = new Card();
+            card.Question = allLines[questionIdx] + Environment.NewLine;
+            
+            // read answer until next ## or ###
+            for (int i = questionIdx + 1; i < allLines.Count(); i++)
+            {
+                if (allLines[i].Contains("##") || allLines[i].Contains("###"))
+                {
+                    break;
+                }
+                card.Answer += allLines[i] + Environment.NewLine;
+            }
+
+            return card;
+            
+        }
+    
     }
 }

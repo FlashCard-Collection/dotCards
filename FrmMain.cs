@@ -80,7 +80,6 @@ namespace DotCards
             }
         }
 
-
         private void fillListView()
         {
             this.lstSets.Items.Clear();
@@ -201,8 +200,6 @@ namespace DotCards
                 this.htmlView.Text += Markdown.ToHtml(card.Answer, this.pipeline);
             }
         }
-
-        
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
