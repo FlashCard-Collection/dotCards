@@ -25,7 +25,6 @@ namespace DotCards
 
         private MarkdownPipeline pipeline;
 
-
         public FrmMain()
         {
             InitializeComponent();
@@ -208,7 +207,7 @@ namespace DotCards
             ProcessStartInfo info = new ProcessStartInfo(batchFilePath);
             info.WorkingDirectory = Directory.GetParent(System.Reflection.Assembly.GetEntryAssembly().Location).FullName;
             
-            Process.Start(batchFilePath);
+            Process.Start(info);
             this.loadCardSets();
             this.fillListView();
         }

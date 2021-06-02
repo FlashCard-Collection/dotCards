@@ -81,6 +81,7 @@ namespace DotCards
             // For each line in a card set, i for line index
             for (int i = 0; i < lines.Count(); i++)
             {
+
                 // Get cardset name
                 if (lines[i].Contains("#") && !lines[i].Contains("##") && !lines[i].Contains("###"))
                 {
