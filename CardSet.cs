@@ -78,6 +78,7 @@ namespace DotCards
 
             string[] lines = File.ReadAllLines(cardsetPath.FullName);
 
+            // For each line in a card set, i for line index
             for (int i = 0; i < lines.Count(); i++)
             {
                 // Get cardset name
