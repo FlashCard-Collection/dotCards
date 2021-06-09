@@ -29,11 +29,11 @@ namespace DotCards
         /// </summary>
         private void InitializeComponent()
         {
-            this.lstSets = new System.Windows.Forms.ListView();
-            this.colSetName = new System.Windows.Forms.ColumnHeader();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tbSelect = new System.Windows.Forms.TabPage();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.txtSearchText = new System.Windows.Forms.TextBox();
+            this.trvCardSet = new System.Windows.Forms.TreeView();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.grpInfo = new System.Windows.Forms.GroupBox();
             this.lblTotalQCountNum = new System.Windows.Forms.Label();
@@ -56,28 +56,6 @@ namespace DotCards
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lstSets
-            // 
-            this.lstSets.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.lstSets.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colSetName});
-            this.lstSets.FullRowSelect = true;
-            this.lstSets.GridLines = true;
-            this.lstSets.HideSelection = false;
-            this.lstSets.Location = new System.Drawing.Point(3, 3);
-            this.lstSets.Name = "lstSets";
-            this.lstSets.Size = new System.Drawing.Size(281, 583);
-            this.lstSets.TabIndex = 0;
-            this.lstSets.UseCompatibleStateImageBehavior = false;
-            this.lstSets.View = System.Windows.Forms.View.Details;
-            this.lstSets.SelectedIndexChanged += new System.EventHandler(this.lstSets_SelectedIndexChanged);
-            // 
-            // colSetName
-            // 
-            this.colSetName.Text = "Set name";
-            this.colSetName.Width = 300;
-            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tbSelect);
@@ -91,10 +69,11 @@ namespace DotCards
             // 
             // tbSelect
             // 
-            this.tbSelect.Controls.Add(this.treeView1);
+            this.tbSelect.Controls.Add(this.btnClear);
+            this.tbSelect.Controls.Add(this.txtSearchText);
+            this.tbSelect.Controls.Add(this.trvCardSet);
             this.tbSelect.Controls.Add(this.btnUpdate);
             this.tbSelect.Controls.Add(this.grpInfo);
-            this.tbSelect.Controls.Add(this.lstSets);
             this.tbSelect.Location = new System.Drawing.Point(4, 24);
             this.tbSelect.Name = "tbSelect";
             this.tbSelect.Padding = new System.Windows.Forms.Padding(3);
@@ -103,12 +82,33 @@ namespace DotCards
             this.tbSelect.Text = "Select";
             this.tbSelect.UseVisualStyleBackColor = true;
             // 
-            // treeView1
+            // btnClear
             // 
-            this.treeView1.Location = new System.Drawing.Point(290, 4);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(228, 582);
-            this.treeView1.TabIndex = 8;
+            this.btnClear.Location = new System.Drawing.Point(438, 8);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.TabIndex = 10;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // txtSearchText
+            // 
+            this.txtSearchText.Location = new System.Drawing.Point(3, 8);
+            this.txtSearchText.Name = "txtSearchText";
+            this.txtSearchText.Size = new System.Drawing.Size(429, 23);
+            this.txtSearchText.TabIndex = 9;
+            this.txtSearchText.TextChanged += new System.EventHandler(this.txtSearchText_TextChanged);
+            // 
+            // trvCardSet
+            // 
+            this.trvCardSet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.trvCardSet.Location = new System.Drawing.Point(3, 37);
+            this.trvCardSet.Name = "trvCardSet";
+            this.trvCardSet.Size = new System.Drawing.Size(510, 554);
+            this.trvCardSet.TabIndex = 8;
+            this.trvCardSet.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
             // btnUpdate
             // 
@@ -281,6 +281,7 @@ namespace DotCards
             this.Text = "DotCards";
             this.tabControl1.ResumeLayout(false);
             this.tbSelect.ResumeLayout(false);
+            this.tbSelect.PerformLayout();
             this.grpInfo.ResumeLayout(false);
             this.grpInfo.PerformLayout();
             this.tbQuestions.ResumeLayout(false);
@@ -290,8 +291,6 @@ namespace DotCards
         }
 
         #endregion
-
-        private System.Windows.Forms.ListView lstSets;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tbSelect;
         private System.Windows.Forms.TabPage tbQuestions;
@@ -301,7 +300,6 @@ namespace DotCards
         private System.Windows.Forms.Button btnSelect;
         private System.Windows.Forms.Label lblPathStr;
         private System.Windows.Forms.Label lblQuestionCountNum;
-        private System.Windows.Forms.ColumnHeader colSetName;
         private TheArtOfDev.HtmlRenderer.WinForms.HtmlPanel htmlView;
         private System.Windows.Forms.Label lblTotalQCountNum;
         private System.Windows.Forms.Label lblTotalQCount;
@@ -310,7 +308,9 @@ namespace DotCards
         private System.Windows.Forms.Button btnShowAnswer;
         private System.Windows.Forms.Button btnPrevQ;
         private System.Windows.Forms.Button btnNextQ;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView trvCardSet;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.TextBox txtSearchText;
     }
 }
 
