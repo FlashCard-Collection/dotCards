@@ -1,6 +1,8 @@
 @echo off
 
-cd Install/Release
+cd %~dp0
+
+echo Current directory: %~dp0
 
 if exist FlashCards (
 	echo Update flashcards
