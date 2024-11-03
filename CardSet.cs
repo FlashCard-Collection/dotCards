@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DotCards
 {
@@ -78,50 +75,57 @@ namespace DotCards
 
             string[] lines = File.ReadAllLines(cardsetPath.FullName);
 
+            int question_count = 0;
+            int answer_count = 0;
             // For each line in a card set, i for line index
             for (int i = 0; i < lines.Count(); i++)
             {
+                string line = lines[i];
 
                 // Get cardset name
-                if (lines[i].Contains("#") && !lines[i].Contains("##") && !lines[i].Contains("###"))
+                if (line.Contains("#") && !line.Contains("## Q") && !line.Contains("### A"))
                 {
-                    this.setName = lines[i].Replace("#", "").Trim();
+                    question_count++;
+                    this.setName = line.Replace("#", "").Trim();
                 }
 
-                // Handle one line question and multiple answer lines
-                if (lines[i].Contains("##") && !lines[i].Contains("###"))
+                if (line.Contains("### A"))
                 {
-                    Card card = this.parseCardSingleLineQuestion(lines, i);
-                    this.cards.Add(card);
+                    answer_count++;
                 }
 
-                // Handle multiple question and answer lines
-                if (lines[i].Contains("###"))
+                    // Handle one line question and multiple answer lines
+                    if (line.Contains("## Q"))
                 {
                     Card card = this.parseCardMultilineQuestion(lines, i);
                     this.cards.Add(card);
                 }
+
+            }
+
+            if(question_count != answer_count)
+            {
+                Console.WriteLine("Question count is not equal to answer count in file: " + cardsetPath.FullName);
             }
         }
 
         private Card parseCardMultilineQuestion(string[] allLines, int questionIdx)
         {
             Card card = new Card();
-            card.Question = allLines[questionIdx] + Environment.NewLine;
 
             int answerBeginIdx = -1;
 
-            // read question until ---
+            // read question until or ### A
             for (int j = questionIdx + 1; j < allLines.Count(); j++)
             {
-                if (allLines[j].Contains("##") || allLines[j].Contains("###"))
+
+                if (allLines[j].Contains("## Q"))
                 {
-                    Console.WriteLine("Error expect --- before " + (allLines[j].Contains("###") ? "###" : "##"));
                     break;
                 }
 
                 // Read question until mk separator (---)
-                if (allLines[j].Contains("---"))
+                if (allLines[j].Contains("### A") || allLines[j].Contains("## Q"))
                 {
                     answerBeginIdx = j + 1;
                     break;
@@ -137,10 +141,10 @@ namespace DotCards
                 return card;
             }
 
-            // read answer until ## or ###
+            // read answer until ## Q or ### A
             for (int j = answerBeginIdx; j < allLines.Count(); j++)
             {
-                if (allLines[j].Contains("##") || allLines[j].Contains("###"))
+                if (allLines[j].Contains("## Q") || allLines[j].Contains("### A"))
                 {
                     break;
                 }
@@ -150,24 +154,5 @@ namespace DotCards
             return card;
         }
 
-        private Card parseCardSingleLineQuestion(string[] allLines, int questionIdx)
-        {
-            Card card = new Card();
-            card.Question = allLines[questionIdx] + Environment.NewLine;
-            
-            // read answer until next ## or ###
-            for (int i = questionIdx + 1; i < allLines.Count(); i++)
-            {
-                if (allLines[i].Contains("##") || allLines[i].Contains("###"))
-                {
-                    break;
-                }
-                card.Answer += allLines[i] + Environment.NewLine;
-            }
-
-            return card;
-            
-        }
-    
     }
 }

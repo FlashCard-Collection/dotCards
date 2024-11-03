@@ -332,6 +332,8 @@ namespace DotCards
             this.loadCardSets();
 
             this.fillTreeView();
+
+            this.trvCardSet.CollapseAll();
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)

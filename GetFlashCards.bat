@@ -10,5 +10,5 @@ if exist FlashCards (
 	git pull
 ) else (
 	echo Download flashcards
-	git clone https://github.com/P20H/FlashCards.git
+	git clone https://github.com/FlashCard-Collection/Flashcards.git
 )
